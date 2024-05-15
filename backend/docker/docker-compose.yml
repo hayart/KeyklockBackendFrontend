@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:18.0.1
+    container_name: keycloak
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_LOG_LEVEL: INFO
+    command:
+      - start-dev
+      - --import-realm # using this path by default for import realm data - /opt/keycloak/data/import/
+      - --http-relative-path /auth
+    volumes:
+      - ./keycloak/realms/import/app-realm.json:/opt/keycloak/data/import/app-realm.json
